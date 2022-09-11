@@ -1,0 +1,107 @@
+<div mat-dialog-title>Nueva Mascota</div>
+<form [formGroup]="mascotaForm">
+    <!-- Document type field-->
+    <mat-form-field class="w-full">
+        <mat-label>{{ 'labels.specie' | transloco }}</mat-label>
+        <mat-select formControlName="specieId">
+            <mat-option
+                *ngFor="let petSpecie of petSpecies"
+                [value]="petSpecie.id"
+                >{{ petSpecie.name }}</mat-option
+            >
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="w-full">
+        <mat-label>{{ 'labels.race' | transloco }}</mat-label>
+        <mat-select formControlName="raceId">
+            <mat-option *ngFor="let petRace of petRaces" [value]="petRace.id">{{
+                petRace.name
+            }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <!-- Document Number field -->
+    <mat-form-field class="w-full">
+        <mat-label>{{ 'labels.name' | transloco }} *</mat-label>
+        <input id="pet_name" matInput [formControlName]="'name'" />
+        <mat-error *ngIf="mascotaForm.get('name').hasError('required')">
+            The Pet name is required
+        </mat-error>
+    </mat-form-field>
+
+    <!-- Name field -->
+    <mat-form-field class="w-full">
+        <mat-label>{{ 'labels.birth_date' | transloco }} *</mat-label>
+        <input
+            id="birth_date"
+            matInput
+            [formControlName]="'birthDate'"
+            type="date"
+        />
+        <mat-error *ngIf="mascotaForm.get('birthDate').hasError('required')">
+            The pet birth date is required
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-full">
+        <mat-label>{{ 'labels.fur_color' | transloco }} *</mat-label>
+        <input id="fur_color" matInput [formControlName]="'furColor'" />
+        <mat-error *ngIf="mascotaForm.get('furColor').hasError('required')">
+            The fur color is required
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-full">
+        <mat-label>{{ 'labels.last_weight' | transloco }} *</mat-label>
+        <input
+            id="weight"
+            matInput
+            [formControlName]="'lastWeight'"
+            type="number"
+        />
+        <mat-icon matSuffix>scale</mat-icon>
+        <mat-error *ngIf="mascotaForm.get('lastWeight').hasError('required')">
+            The last weight is required
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-full">
+        <mat-label>{{ 'labels.pet_image' | transloco }}</mat-label>
+        <input id="pet_image" matInput [formControlName]="'photoUrl'" />
+    </mat-form-field>
+
+    <!-- Submit button -->
+    <div class="flex flex-col sm:flex-row gap-1">
+        <button
+            class="w-1/2"
+            mat-flat-button
+            type="submit"
+            [color]="'primary'"
+            [disabled]="mascotaForm.disabled"
+            (click)="save()"
+        >
+            <span *ngIf="!mascotaForm.disabled">
+                {{
+                    petSaved
+                        ? ('buttons.update' | transloco)
+                        : ('buttons.save' | transloco)
+                }}
+            </span>
+            <mat-progress-spinner
+                *ngIf="mascotaForm.disabled"
+                [diameter]="24"
+                [mode]="'indeterminate'"
+            ></mat-progress-spinner>
+        </button>
+        <button
+            class="w-1/2"
+            mat-flat-button
+            color="warn"
+            type="button"
+            (click)="dialogRef.close(petSaved)"
+        >
+            {{ 'buttons.close' | transloco }}
+        </button>
+    </div>
+</form>

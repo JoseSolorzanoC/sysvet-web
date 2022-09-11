@@ -1,0 +1,63 @@
+<div mat-dialog-title>Nuevo Turno</div>
+<form [formGroup]="turnoForm">
+    <!-- Document Number field -->
+    <mat-form-field class="w-full">
+        <mat-label>{{ 'labels.reason' | transloco }} *</mat-label>
+        <input id="reason" matInput [formControlName]="'reason'" />
+        <mat-error *ngIf="turnoForm.get('reason').hasError('required')">
+            The reason is required
+        </mat-error>
+    </mat-form-field>
+
+    <!-- Name field -->
+    <mat-form-field class="w-full">
+        <mat-label>{{ 'labels.date' | transloco }} *</mat-label>
+        <input id="date" type="date" matInput [formControlName]="'date'" />
+        <mat-error *ngIf="turnoForm.get('date').hasError('required')">
+            The date is required
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-full">
+        <mat-label>Mascotas</mat-label>
+        <mat-select [formControlName]="'pets'" multiple>
+            <mat-option *ngFor="let pet of pets" [value]="pet.id">{{
+                pet.name
+            }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <!-- Submit button -->
+    <div class="flex flex-col sm:flex-row gap-1">
+        <button
+            class="w-1/2"
+            mat-flat-button
+            type="submit"
+            [color]="'primary'"
+            [disabled]="turnoForm.disabled"
+            (click)="save()"
+        >
+            <span *ngIf="!turnoForm.disabled">
+                {{
+                    medicoSaved
+                        ? ('buttons.update' | transloco)
+                        : ('buttons.save' | transloco)
+                }}
+            </span>
+            <mat-progress-spinner
+                *ngIf="turnoForm.disabled"
+                [diameter]="24"
+                [mode]="'indeterminate'"
+            ></mat-progress-spinner>
+        </button>
+        <button
+            class="w-1/2 bg-re"
+            mat-flat-button
+            color="warn"
+            type="button"
+            (click)="dialogRef.close(medicoSaved)"
+        >
+            {{ 'buttons.close' | transloco }}
+        </button>
+    </div>
+</form>

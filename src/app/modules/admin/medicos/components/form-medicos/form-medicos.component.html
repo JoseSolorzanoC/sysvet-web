@@ -1,0 +1,133 @@
+<div mat-dialog-title>Nueva Medico</div>
+<form [formGroup]="medicoForm">
+    <!-- Document type field-->
+    <mat-form-field class="w-full">
+        <mat-label>{{ 'labels.document_type' | transloco }} *</mat-label>
+        <mat-select formControlName="documentType">
+            <mat-option
+                *ngFor="let documentType of documentTypes"
+                [value]="documentType.id"
+                >{{ documentType.documentName }}</mat-option
+            >
+        </mat-select>
+        <mat-error *ngIf="medicoForm.get('documentType').hasError('required')">
+            The document type is required
+        </mat-error>
+    </mat-form-field>
+
+    <!-- Document Number field -->
+    <mat-form-field class="w-full">
+        <mat-label>{{ 'labels.document_number' | transloco }} *</mat-label>
+        <input
+            id="document_number"
+            matInput
+            [formControlName]="'documentNumber'"
+        />
+        <mat-error
+            *ngIf="medicoForm.get('documentNumber').hasError('required')"
+        >
+            The document number is required
+        </mat-error>
+    </mat-form-field>
+
+    <!-- Name field -->
+    <mat-form-field class="w-full">
+        <mat-label>{{ 'labels.full_name' | transloco }} *</mat-label>
+        <input id="full_name" matInput [formControlName]="'fullName'" />
+        <mat-error *ngIf="medicoForm.get('fullName').hasError('required')">
+            Full name is required
+        </mat-error>
+    </mat-form-field>
+
+    <!-- Email field -->
+    <mat-form-field class="w-full">
+        <mat-label>{{ 'labels.email' | transloco }} *</mat-label>
+        <input
+            id="email"
+            matInput
+            [formControlName]="'email'"
+            autocomplete="email"
+        />
+        <mat-error *ngIf="medicoForm.get('email').hasError('required')">
+            Email address is required
+        </mat-error>
+        <mat-error *ngIf="medicoForm.get('email').hasError('email')">
+            Please enter a valid email address
+        </mat-error>
+    </mat-form-field>
+
+    <!-- Password field -->
+    <mat-form-field class="w-full">
+        <mat-label>{{ 'labels.password' | transloco }} *</mat-label>
+        <input
+            id="password"
+            matInput
+            autocomplete="new-password"
+            type="password"
+            [formControlName]="'password'"
+            #passwordField
+        />
+        <button
+            mat-icon-button
+            type="button"
+            (click)="
+                passwordField.type === 'password'
+                    ? (passwordField.type = 'text')
+                    : (passwordField.type = 'password')
+            "
+            matSuffix
+        >
+            <mat-icon
+                class="icon-size-5"
+                *ngIf="passwordField.type === 'password'"
+                [svgIcon]="'heroicons_solid:eye'"
+            ></mat-icon>
+            <mat-icon
+                class="icon-size-5"
+                *ngIf="passwordField.type === 'text'"
+                [svgIcon]="'heroicons_solid:eye-off'"
+            ></mat-icon>
+        </button>
+        <mat-error> Password is required </mat-error>
+    </mat-form-field>
+
+    <!-- Company field -->
+    <mat-form-field class="w-full">
+        <mat-label>{{ 'labels.phone_number' | transloco }} *</mat-label>
+        <input id="phone_number" matInput [formControlName]="'phoneNumber'" />
+    </mat-form-field>
+
+    <!-- Submit button -->
+    <div class="flex flex-col sm:flex-row gap-1">
+        <button
+            class="w-1/2"
+            mat-flat-button
+            type="submit"
+            [color]="'primary'"
+            [disabled]="medicoForm.disabled"
+            (click)="save()"
+        >
+            <span *ngIf="!medicoForm.disabled">
+                {{
+                    medicoSaved
+                        ? ('buttons.update' | transloco)
+                        : ('buttons.save' | transloco)
+                }}
+            </span>
+            <mat-progress-spinner
+                *ngIf="medicoForm.disabled"
+                [diameter]="24"
+                [mode]="'indeterminate'"
+            ></mat-progress-spinner>
+        </button>
+        <button
+            class="w-1/2 bg-re"
+            mat-flat-button
+            color="warn"
+            type="button"
+            (click)="dialogRef.close(medicoSaved)"
+        >
+            {{ 'buttons.close' | transloco }}
+        </button>
+    </div>
+</form>

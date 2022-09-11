@@ -1,0 +1,9 @@
+{
+    "login": {
+        "sign_in": "Sign in",
+        "no_account": "Don't have an account?",
+        "email": "Email address",
+        "password": "Password",
+        "sign_up": "Sign up"
+    }
+}

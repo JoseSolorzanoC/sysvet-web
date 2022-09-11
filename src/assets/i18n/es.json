@@ -1,0 +1,38 @@
+{
+    "labels": {
+        "full_name": "Nombre completo",
+        "email": "Correo electronico",
+        "password": "Contrasena",
+        "phone_number": "Telefono",
+        "sign_in": "Iniciar sesion",
+        "no_account": "No tienes una cuenta?",
+        "sign_up": "Registrarse",
+        "have_account": "Ya tienes una cuenta?",
+        "document_type": "Tipo de documento",
+        "document_number": "No. de documento",
+        "born_ago": "Nacido",
+        "specie": "Especie",
+        "race": "Raza",
+        "name": "Nombre",
+        "birth_date": "Fecha de nacimiento",
+        "fur_color": "Color de pelaje",
+        "last_weight": "Utlimo peso registrado (Kilogramos)",
+        "pet_image": "Imagen de la mascota",
+        "reason": "Razon",
+        "date": "Fecha"
+    },
+    "buttons": {
+        "new_pet": "Nueva Mascota",
+        "new_doctor": "Nuevo Medico",
+        "new_appointment": "Nuevo Turno",
+        "update": "Editar",
+        "save": "Guardar",
+        "delete": "Eliminar",
+        "close": "Cerrar"
+    },
+    "values": {
+        "id_card": "Cedula",
+        "passport": "Pasaporte",
+        "ruc": "RUC"
+    }
+}
