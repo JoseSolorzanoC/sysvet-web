@@ -1,4 +1,4 @@
 export const environment = {
     production: false,
-    apiUrl: 'localhost:3333/api',
+    apiUrl: 'https://https://sysvet-api.herokuapp.com/api',
 };
