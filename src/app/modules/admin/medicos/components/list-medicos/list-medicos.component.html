@@ -6,7 +6,7 @@
             type="button"
             (click)="openNewMedicoModal()"
         >
-            {{ 'buttons.new_doctor' | transloco }}
+            {{ "buttons.new_doctor" | transloco }}
         </button>
         <mat-progress-spinner
             *ngIf="isLoading"
@@ -23,7 +23,7 @@
     <div *ngIf="medicos.length > 0" class="w-full">
         <div *ngFor="let medico of medicos" class="w-full">
             <div
-                class="bg-gray-200 rounded-md shadow-md p-2 text-md flex flex-col md:flex-row justify-around items-center"
+                class="bg-gray-200 rounded-md shadow-md p-2 text-md flex flex-col md:flex-row justify-between items-center"
             >
                 <div class="flex items-center gap-x-2">
                     <mat-icon>text_format</mat-icon>{{ medico.person.fullName }}
@@ -34,18 +34,25 @@
                 </div>
                 <div class="flex items-center gap-x-2">
                     <mat-icon>event</mat-icon>
-                    {{ medico.person.birthDate ?? 'No definida' }}
+                    {{ medico.person.birthDate ?? "No definida" }}
                 </div>
                 <div class="flex items-center gap-x-2">
                     <mat-icon>mail</mat-icon>
                     {{ medico.email }}
                 </div>
                 <div class="flex flex-row gap-1">
-                    <button mat-raised-button>
-                        {{ 'buttons.update' | transloco }}
+                    <button
+                        mat-raised-button
+                        (click)="openUpdateMedicoModal(medico)"
+                    >
+                        {{ "buttons.update" | transloco }}
                     </button>
-                    <button mat-raised-button color="warn">
-                        {{ 'buttons.delete' | transloco }}
+                    <button
+                        mat-raised-button
+                        color="warn"
+                        (click)="deleteDoctorById(medico.id)"
+                    >
+                        {{ "buttons.delete" | transloco }}
                     </button>
                 </div>
             </div>

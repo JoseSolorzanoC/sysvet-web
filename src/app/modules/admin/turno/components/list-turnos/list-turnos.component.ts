@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { FuseConfirmationService } from '@fuse/services/confirmation';
+import { SharedService } from 'app/shared/shared.service';
 import { TurnosService } from '../../services/turnos.service';
 import { FormTurnosComponent } from '../form-turnos/form-turnos.component';
 
@@ -14,7 +16,9 @@ export class ListTurnosComponent implements OnInit {
 
     constructor(
         private turnosService: TurnosService,
-        private matDialog: MatDialog
+        private matDialog: MatDialog,
+        private fuseConfirmationService: FuseConfirmationService,
+        private sharedService: SharedService
     ) {
         this.getTurnosList();
     }
@@ -41,5 +45,46 @@ export class ListTurnosComponent implements OnInit {
             this.isLoading = false;
             this.turnos = turnos;
         });
+    }
+
+    cancelTurnoById(turnoId: string): void {
+        this.fuseConfirmationService
+            .open({
+                title: 'alerts.you_sure_delete_label',
+                message: 'alerts.you_sure_cancel_message',
+                actions: {
+                    confirm: {
+                        color: 'warn',
+                        label: 'buttons.yes',
+                        show: true,
+                    },
+                    cancel: {
+                        label: 'buttons.no',
+                        show: true,
+                    },
+                },
+                dismissible: false,
+            })
+            .afterClosed()
+            .subscribe((res) => {
+                if (res === 'confirmed') {
+                    this.isLoading = true;
+                    this.turnosService.cancelTurno(turnoId).subscribe(
+                        () => {
+                            this.isLoading = false;
+                            this.getTurnosList();
+                            this.sharedService.showAlert(
+                                'alerts.turno_cancel_ok'
+                            );
+                        },
+                        () => {
+                            this.isLoading = false;
+                            this.sharedService.showAlert(
+                                'alerts.turno_cancel_error'
+                            );
+                        }
+                    );
+                }
+            });
     }
 }

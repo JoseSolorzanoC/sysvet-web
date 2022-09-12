@@ -6,7 +6,7 @@
             type="button"
             (click)="openNewTurnoModal()"
         >
-            {{ 'buttons.new_appointment' | transloco }}
+            {{ "buttons.new_appointment" | transloco }}
         </button>
         <mat-progress-spinner
             *ngIf="isLoading"
@@ -23,7 +23,7 @@
     <div *ngIf="turnos.length > 0" class="w-full">
         <div *ngFor="let turno of turnos" class="w-full">
             <div
-                class="bg-gray-200 rounded-md shadow-md p-2 text-md flex flex-col md:flex-row justify-around items-center"
+                class="bg-gray-200 rounded-md shadow-md p-2 text-md flex flex-col md:flex-row justify-between items-center"
             >
                 <div class="flex items-center gap-x-2">
                     <mat-icon>event</mat-icon>{{ turno.date }}
@@ -37,11 +37,12 @@
                     {{ turno.appointmentPets.length }} Mascotas
                 </div>
                 <div class="flex flex-row gap-1">
-                    <button mat-raised-button>
-                        {{ 'buttons.update' | transloco }}
-                    </button>
-                    <button mat-raised-button color="warn">
-                        {{ 'buttons.delete' | transloco }}
+                    <button
+                        mat-raised-button
+                        color="warn"
+                        (click)="cancelTurnoById(turno.id)"
+                    >
+                        {{ "buttons.cancel" | transloco }}
                     </button>
                 </div>
             </div>

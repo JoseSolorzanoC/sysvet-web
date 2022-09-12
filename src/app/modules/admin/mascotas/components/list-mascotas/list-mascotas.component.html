@@ -6,7 +6,7 @@
             type="button"
             (click)="openNewPetModal()"
         >
-            {{ 'buttons.new_pet' | transloco }}
+            {{ "buttons.new_pet" | transloco }}
         </button>
         <mat-progress-spinner
             *ngIf="isLoading"
@@ -30,15 +30,23 @@
                     pet.name
                 }}</mat-card-title>
                 <mat-card-subtitle>{{
-                    ('labels.born_ago' | transloco) +
-                        ' ' +
+                    ("labels.born_ago" | transloco) +
+                        " " +
                         getAge(pet.birthDate)
                 }}</mat-card-subtitle>
             </mat-card-header>
             <img
                 mat-card-image
+                *ngIf="pet.photoUrl"
                 class="h-50 m-0 mb-4 object-cover rounded-md"
                 [src]="pet.photoUrl"
+                [alt]="'Photo of ' + pet.name"
+            />
+            <img
+                mat-card-image
+                *ngIf="!pet.photoUrl"
+                class="h-50 m-0 mb-4 object-cover rounded-md"
+                [src]="'assets/images/without_image.jpg'"
                 [alt]="'Photo of ' + pet.name"
             />
             <mat-card-content
@@ -58,11 +66,11 @@
                 </div>
             </mat-card-content>
             <mat-card-actions>
-                <button mat-button>
-                    {{ 'buttons.update' | transloco }}
+                <button mat-button (click)="openUpdatePetModal(pet)">
+                    {{ "buttons.update" | transloco }}
                 </button>
-                <button mat-button color="warn">
-                    {{ 'buttons.delete' | transloco }}
+                <button mat-button color="warn" (click)="deletePetById(pet.id)">
+                    {{ "buttons.delete" | transloco }}
                 </button>
             </mat-card-actions>
         </mat-card>

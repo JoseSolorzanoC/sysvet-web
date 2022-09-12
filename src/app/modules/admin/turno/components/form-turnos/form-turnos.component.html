@@ -1,8 +1,8 @@
 <div mat-dialog-title>Nuevo Turno</div>
-<form [formGroup]="turnoForm">
+<form [formGroup]="turnoForm" mat-dialog-content>
     <!-- Document Number field -->
     <mat-form-field class="w-full">
-        <mat-label>{{ 'labels.reason' | transloco }} *</mat-label>
+        <mat-label>{{ "labels.reason" | transloco }}</mat-label>
         <input id="reason" matInput [formControlName]="'reason'" />
         <mat-error *ngIf="turnoForm.get('reason').hasError('required')">
             The reason is required
@@ -11,8 +11,17 @@
 
     <!-- Name field -->
     <mat-form-field class="w-full">
-        <mat-label>{{ 'labels.date' | transloco }} *</mat-label>
-        <input id="date" type="date" matInput [formControlName]="'date'" />
+        <mat-label>{{ "labels.date" | transloco }}</mat-label>
+        <input
+            matInput
+            [min]="minDate"
+            [matDatepicker]="picker"
+            id="date"
+            [formControlName]="'date'"
+        />
+        <mat-hint>dd/mm/aaaa</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
         <mat-error *ngIf="turnoForm.get('date').hasError('required')">
             The date is required
         </mat-error>
@@ -28,9 +37,8 @@
     </mat-form-field>
 
     <!-- Submit button -->
-    <div class="flex flex-col sm:flex-row gap-1">
+    <div class="flex flex-col sm:flex-row gap-1 justify-end">
         <button
-            class="w-1/2"
             mat-flat-button
             type="submit"
             [color]="'primary'"
@@ -39,9 +47,9 @@
         >
             <span *ngIf="!turnoForm.disabled">
                 {{
-                    medicoSaved
-                        ? ('buttons.update' | transloco)
-                        : ('buttons.save' | transloco)
+                    turnoSaved
+                        ? ("buttons.update" | transloco)
+                        : ("buttons.save" | transloco)
                 }}
             </span>
             <mat-progress-spinner
@@ -51,13 +59,12 @@
             ></mat-progress-spinner>
         </button>
         <button
-            class="w-1/2 bg-re"
             mat-flat-button
             color="warn"
             type="button"
-            (click)="dialogRef.close(medicoSaved)"
+            (click)="dialogRef.close(turnoSaved)"
         >
-            {{ 'buttons.close' | transloco }}
+            {{ "buttons.close" | transloco }}
         </button>
     </div>
 </form>

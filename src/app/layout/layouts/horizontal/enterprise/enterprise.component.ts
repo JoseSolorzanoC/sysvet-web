@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import {
     FuseNavigationService,
     FuseVerticalNavigationComponent,
@@ -7,6 +6,7 @@ import {
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 import { NavigationService } from 'app/core/navigation/navigation.service';
 import { Navigation } from 'app/core/navigation/navigation.types';
+import { User } from 'app/shared/interfaces';
 import { SharedService } from 'app/shared/shared.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -19,14 +19,13 @@ import { takeUntil } from 'rxjs/operators';
 export class EnterpriseLayoutComponent implements OnInit, OnDestroy {
     isScreenSmall: boolean;
     navigation: Navigation;
+    user: User;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
      * Constructor
      */
     constructor(
-        private _activatedRoute: ActivatedRoute,
-        private _router: Router,
         private _navigationService: NavigationService,
         private _fuseMediaWatcherService: FuseMediaWatcherService,
         private _fuseNavigationService: FuseNavigationService,
@@ -53,6 +52,7 @@ export class EnterpriseLayoutComponent implements OnInit, OnDestroy {
      */
     ngOnInit(): void {
         this._sharedService.getCurrentUser().subscribe((user) => {
+            this.user = user;
             // Subscribe to navigation data
             this._navigationService.navigation$
                 .pipe(takeUntil(this._unsubscribeAll))

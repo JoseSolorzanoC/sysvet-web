@@ -18,4 +18,9 @@ export class TurnosService {
         const url = `${environment.apiUrl}/appointments/new`;
         return this._httpClient.post<any>(url, turno);
     }
+
+    cancelTurno(turnoId: string): Observable<any> {
+        const url = `${environment.apiUrl}/appointments/cancel/${turnoId}`;
+        return this._httpClient.delete<any>(url);
+    }
 }

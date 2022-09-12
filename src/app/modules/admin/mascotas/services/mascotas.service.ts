@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { PetRace, PetSpecie } from 'app/shared/interfaces';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 
@@ -14,12 +15,12 @@ export class MascotasService {
         return this.httpClient.get<any[]>(url);
     }
 
-    getAllRaces(): Observable<any[]> {
+    getAllRaces(): Observable<PetRace[]> {
         const url = `${environment.apiUrl}/maintenance/pet-races`;
         return this.httpClient.get<any[]>(url);
     }
 
-    getAllSpecies(): Observable<any[]> {
+    getAllSpecies(): Observable<PetSpecie[]> {
         const url = `${environment.apiUrl}/maintenance/pet-species`;
         return this.httpClient.get<any[]>(url);
     }

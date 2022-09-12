@@ -59,7 +59,11 @@
                 <div
                     class="flex items-center pl-2 ml-auto space-x-1 sm:space-x-2"
                 >
-                    <languages></languages>
+                    <span
+                        class="bg-green-400 text-black font-semibold rounded text-sm p-1"
+                        >{{ user?.role }}</span
+                    >
+                    <!-- <languages></languages> -->
                     <fuse-fullscreen class="hidden md:block"></fuse-fullscreen>
                     <!-- <search [appearance]="'bar'"></search>
                     <shortcuts></shortcuts>

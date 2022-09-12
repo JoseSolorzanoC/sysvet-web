@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { FuseConfirmationService } from '@fuse/services/confirmation';
+import { MedicoPersona } from 'app/shared/interfaces';
+import { SharedService } from 'app/shared/shared.service';
 import { MedicosService } from '../../services/medicos.service';
 import { FormMedicosComponent } from '../form-medicos/form-medicos.component';
 
@@ -14,9 +17,11 @@ export class ListMedicosComponent implements OnInit {
 
     constructor(
         private medicosService: MedicosService,
-        private matDialog: MatDialog
+        private matDialog: MatDialog,
+        private fuseConfirmationService: FuseConfirmationService,
+        private sharedService: SharedService
     ) {
-        this.getPetsList();
+        this.getMedicosList();
     }
 
     openNewMedicoModal(): void {
@@ -27,19 +32,67 @@ export class ListMedicosComponent implements OnInit {
             })
             .afterClosed()
             .subscribe((res) => {
-                if (res) {
-                    this.getPetsList();
-                }
+                this.getMedicosList();
+            });
+    }
+
+    openUpdateMedicoModal(medico: MedicoPersona): void {
+        this.matDialog
+            .open(FormMedicosComponent, {
+                disableClose: true,
+                panelClass: ['w-full', 'md:w-2/4', 'lg:w-2/5', 'xl:w-1/4'],
+                data: medico,
+            })
+            .afterClosed()
+            .subscribe((res) => {
+                this.getMedicosList();
             });
     }
 
     ngOnInit(): void {}
 
-    getPetsList(): void {
+    getMedicosList(): void {
         this.isLoading = true;
         this.medicosService.getAllMedicos().subscribe((medicos) => {
             this.isLoading = false;
             this.medicos = medicos;
         });
+    }
+
+    deleteDoctorById(doctorId: string): void {
+        this.fuseConfirmationService
+            .open({
+                title: 'alerts.you_sure_delete_label',
+                message: 'alerts.you_sure_delete_message',
+                actions: {
+                    confirm: {
+                        color: 'warn',
+                        label: 'buttons.yes',
+                        show: true,
+                    },
+                    cancel: {
+                        label: 'buttons.no',
+                        show: true,
+                    },
+                },
+                dismissible: false,
+            })
+            .afterClosed()
+            .subscribe((res) => {
+                if (res === 'confirmed') {
+                    this.isLoading = true;
+                    this.medicosService.deleteDoctor(doctorId).subscribe(
+                        () => {
+                            this.isLoading = false;
+                            this.getMedicosList();
+                            this.sharedService.showAlert('alerts.delete_ok');
+                        },
+                        () => {
+                            this.isLoading = false;
+                            this.sharedService.showAlert('alerts.delete_error');
+                        }
+                    );
+                }
+            });
     }
 }

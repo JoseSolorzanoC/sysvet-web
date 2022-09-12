@@ -1,8 +1,8 @@
 <div mat-dialog-title>Nueva Medico</div>
-<form [formGroup]="medicoForm">
+<form [formGroup]="medicoForm" mat-dialog-content>
     <!-- Document type field-->
     <mat-form-field class="w-full">
-        <mat-label>{{ 'labels.document_type' | transloco }} *</mat-label>
+        <mat-label>{{ "labels.document_type" | transloco }}</mat-label>
         <mat-select formControlName="documentType">
             <mat-option
                 *ngFor="let documentType of documentTypes"
@@ -17,7 +17,7 @@
 
     <!-- Document Number field -->
     <mat-form-field class="w-full">
-        <mat-label>{{ 'labels.document_number' | transloco }} *</mat-label>
+        <mat-label>{{ "labels.document_number" | transloco }}</mat-label>
         <input
             id="document_number"
             matInput
@@ -32,7 +32,7 @@
 
     <!-- Name field -->
     <mat-form-field class="w-full">
-        <mat-label>{{ 'labels.full_name' | transloco }} *</mat-label>
+        <mat-label>{{ "labels.full_name" | transloco }}</mat-label>
         <input id="full_name" matInput [formControlName]="'fullName'" />
         <mat-error *ngIf="medicoForm.get('fullName').hasError('required')">
             Full name is required
@@ -41,12 +41,12 @@
 
     <!-- Email field -->
     <mat-form-field class="w-full">
-        <mat-label>{{ 'labels.email' | transloco }} *</mat-label>
+        <mat-label>{{ "labels.email" | transloco }}</mat-label>
         <input
             id="email"
             matInput
             [formControlName]="'email'"
-            autocomplete="email"
+            autocomplete="off"
         />
         <mat-error *ngIf="medicoForm.get('email').hasError('required')">
             Email address is required
@@ -56,51 +56,64 @@
         </mat-error>
     </mat-form-field>
 
-    <!-- Password field -->
-    <mat-form-field class="w-full">
-        <mat-label>{{ 'labels.password' | transloco }} *</mat-label>
-        <input
-            id="password"
-            matInput
-            autocomplete="new-password"
-            type="password"
-            [formControlName]="'password'"
-            #passwordField
-        />
+    <div class="flex flex-row gap-1 items-center justify-center">
+        <!-- Password field -->
+        <mat-form-field class="w-full">
+            <mat-label>{{ "labels.password" | transloco }}</mat-label>
+            <input
+                id="password"
+                matInput
+                autocomplete="off"
+                type="password"
+                [formControlName]="'password'"
+                #passwordField
+            />
+            <button
+                mat-icon-button
+                type="button"
+                (click)="
+                    passwordField.type === 'password'
+                        ? (passwordField.type = 'text')
+                        : (passwordField.type = 'password')
+                "
+                matSuffix
+            >
+                <mat-icon
+                    class="icon-size-5"
+                    *ngIf="passwordField.type === 'password'"
+                    [svgIcon]="'heroicons_solid:eye'"
+                ></mat-icon>
+                <mat-icon
+                    class="icon-size-5"
+                    *ngIf="passwordField.type === 'text'"
+                    [svgIcon]="'heroicons_solid:eye-off'"
+                ></mat-icon>
+            </button>
+            <mat-error> Password is required </mat-error>
+        </mat-form-field>
+
         <button
-            mat-icon-button
+            *ngIf="medicoSaved"
+            (click)="managePasswordUpdate()"
+            class="relative"
             type="button"
-            (click)="
-                passwordField.type === 'password'
-                    ? (passwordField.type = 'text')
-                    : (passwordField.type = 'password')
-            "
-            matSuffix
+            mat-fab
+            color="primary"
+            aria-label="Button to update doctor password"
         >
-            <mat-icon
-                class="icon-size-5"
-                *ngIf="passwordField.type === 'password'"
-                [svgIcon]="'heroicons_solid:eye'"
-            ></mat-icon>
-            <mat-icon
-                class="icon-size-5"
-                *ngIf="passwordField.type === 'text'"
-                [svgIcon]="'heroicons_solid:eye-off'"
-            ></mat-icon>
+            <mat-icon>{{ passwordUpdateMode ? "cancel" : "edit" }}</mat-icon>
         </button>
-        <mat-error> Password is required </mat-error>
-    </mat-form-field>
+    </div>
 
     <!-- Company field -->
     <mat-form-field class="w-full">
-        <mat-label>{{ 'labels.phone_number' | transloco }} *</mat-label>
+        <mat-label>{{ "labels.phone_number" | transloco }}</mat-label>
         <input id="phone_number" matInput [formControlName]="'phoneNumber'" />
     </mat-form-field>
 
     <!-- Submit button -->
-    <div class="flex flex-col sm:flex-row gap-1">
+    <div class="flex flex-col sm:flex-row justify-end gap-1">
         <button
-            class="w-1/2"
             mat-flat-button
             type="submit"
             [color]="'primary'"
@@ -110,8 +123,8 @@
             <span *ngIf="!medicoForm.disabled">
                 {{
                     medicoSaved
-                        ? ('buttons.update' | transloco)
-                        : ('buttons.save' | transloco)
+                        ? ("buttons.update" | transloco)
+                        : ("buttons.save" | transloco)
                 }}
             </span>
             <mat-progress-spinner
@@ -121,13 +134,12 @@
             ></mat-progress-spinner>
         </button>
         <button
-            class="w-1/2 bg-re"
             mat-flat-button
             color="warn"
             type="button"
             (click)="dialogRef.close(medicoSaved)"
         >
-            {{ 'buttons.close' | transloco }}
+            {{ "buttons.close" | transloco }}
         </button>
     </div>
 </form>

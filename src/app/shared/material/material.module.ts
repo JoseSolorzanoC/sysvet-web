@@ -3,6 +3,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -20,7 +21,6 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FuseAlertModule } from '@fuse/components/alert';
 import { FuseCardModule } from '@fuse/components/card';
-
 @NgModule({
     imports: [
         MatButtonModule,
@@ -44,6 +44,7 @@ import { FuseCardModule } from '@fuse/components/card';
         FuseAlertModule,
         MatSelectModule,
         MatDividerModule,
+        MatDatepickerModule,
     ],
     exports: [
         MatButtonModule,
@@ -67,6 +68,7 @@ import { FuseCardModule } from '@fuse/components/card';
         FuseAlertModule,
         MatSelectModule,
         MatDividerModule,
+        MatDatepickerModule,
     ],
 })
 export class MaterialModule {}

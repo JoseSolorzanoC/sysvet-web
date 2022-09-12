@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { FuseConfirmationService } from '@fuse/services/confirmation';
+import { SharedService } from 'app/shared/shared.service';
 import moment from 'moment';
 import { MascotasService } from '../../services/mascotas.service';
 import { FormMascotasComponent } from '../form-mascotas/form-mascotas.component';
@@ -15,7 +17,9 @@ export class ListMascotasComponent implements OnInit {
 
     constructor(
         private mascotasService: MascotasService,
-        private matDialog: MatDialog
+        private matDialog: MatDialog,
+        private fuseConfirmationService: FuseConfirmationService,
+        private sharedService: SharedService
     ) {
         this.getPetsList();
     }
@@ -34,6 +38,20 @@ export class ListMascotasComponent implements OnInit {
             });
     }
 
+    openUpdatePetModal(pet: any): void {
+        this.matDialog
+            .open(FormMascotasComponent, {
+                disableClose: true,
+                panelClass: ['w-full', 'md:w-2/4', 'lg:w-2/5', 'xl:w-1/4'],
+                data: pet,
+            })
+            .afterClosed()
+            .subscribe((res) => {
+                if (res) {
+                    this.getPetsList();
+                }
+            });
+    }
     ngOnInit(): void {}
 
     getAge(birthDate: Date): string {
@@ -46,5 +64,42 @@ export class ListMascotasComponent implements OnInit {
             this.isLoading = false;
             this.pets = res;
         });
+    }
+
+    deletePetById(petId: string): void {
+        this.fuseConfirmationService
+            .open({
+                title: 'alerts.you_sure_delete_label',
+                message: 'alerts.you_sure_delete_message',
+                actions: {
+                    confirm: {
+                        color: 'warn',
+                        label: 'buttons.yes',
+                        show: true,
+                    },
+                    cancel: {
+                        label: 'buttons.no',
+                        show: true,
+                    },
+                },
+                dismissible: false,
+            })
+            .afterClosed()
+            .subscribe((res) => {
+                if (res === 'confirmed') {
+                    this.isLoading = true;
+                    this.mascotasService.deletePetById(petId).subscribe(
+                        () => {
+                            this.isLoading = false;
+                            this.getPetsList();
+                            this.sharedService.showAlert('alerts.delete_ok');
+                        },
+                        () => {
+                            this.isLoading = false;
+                            this.sharedService.showAlert('alerts.delete_error');
+                        }
+                    );
+                }
+            });
     }
 }

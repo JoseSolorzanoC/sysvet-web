@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserService } from 'app/core/user/user.service';
+import { User } from 'app/shared/interfaces';
 import { environment } from 'environments/environment';
 import { Observable, of, throwError } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
@@ -28,6 +29,7 @@ export class AuthService {
         localStorage.setItem('accessToken', token);
     }
 
+    // eslint-disable-next-line @typescript-eslint/member-ordering
     get accessToken(): string {
         return localStorage.getItem('accessToken') ?? '';
     }
@@ -133,8 +135,11 @@ export class AuthService {
      *
      * @param user
      */
-    signUp(user: any): Observable<any> {
-        return this._httpClient.post(`${environment.apiUrl}/auth/signup`, user);
+    signUp(user: any): Observable<User> {
+        return this._httpClient.post<User>(
+            `${environment.apiUrl}/auth/signup`,
+            user
+        );
     }
 
     /**

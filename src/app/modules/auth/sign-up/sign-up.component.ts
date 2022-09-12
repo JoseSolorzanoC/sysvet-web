@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
+import { DocumentType } from 'app/shared/interfaces';
 import { SharedService } from 'app/shared/shared.service';
 
 @Component({
@@ -79,7 +80,7 @@ export class AuthSignUpComponent implements OnInit {
 
         // Sign up
         this._authService.signUp(this.signUpForm.value).subscribe(
-            (response) => {
+            () => {
                 this._snackBar.open(
                     'Usuario registrado. Inicia sesion con tus credenciales.',
                     'OK',

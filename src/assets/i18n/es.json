@@ -28,11 +28,23 @@
         "update": "Editar",
         "save": "Guardar",
         "delete": "Eliminar",
-        "close": "Cerrar"
+        "close": "Cerrar",
+        "yes": "Si",
+        "no": "No",
+        "cancel": "Cancelar"
     },
     "values": {
         "id_card": "Cedula",
         "passport": "Pasaporte",
         "ruc": "RUC"
+    },
+    "alerts": {
+        "you_sure_delete_label": "Esta seguro?",
+        "you_sure_delete_message": "El registro se eliminara",
+        "delete_ok": "Informacion eliminada correctamente",
+        "delete_error": "Ocurrio un error al intentar eliminar la informacion. Intentelo mas tarde.",
+        "you_sure_cancel_message": "El turno se cancelara y no podra ser recuperado",
+        "turno_cancel_ok": "Turno cancelado correctamente",
+        "turno_cancel_error": "Ocurrio un error al intentar cancelar el turno. Intentelo mas tarde."
     }
 }
