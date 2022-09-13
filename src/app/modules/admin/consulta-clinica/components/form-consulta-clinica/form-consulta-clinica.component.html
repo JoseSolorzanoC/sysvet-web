@@ -1,0 +1,247 @@
+<div class="w-full p-6">
+    <form [formGroup]="consultaForm" class="grid grid-cols-12 gap-2">
+        <mat-form-field class="col-start-1 col-span-3">
+            <mat-label>Seleccione mascota a atender</mat-label>
+            <mat-select [formControlName]="'petId'">
+                <mat-option *ngFor="let pet of pets" [value]="pet.id">{{
+                    pet.name
+                }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <ng-container *ngIf="consultaForm.controls.petId.value">
+            <!-- Reason -->
+            <mat-form-field class="col-start-1 col-span-4">
+                <mat-label>{{ "labels.reason" | transloco }}</mat-label>
+                <textarea
+                    id="reason"
+                    matInput
+                    [formControlName]="'reason'"
+                ></textarea>
+                <mat-error
+                    *ngIf="consultaForm.get('reason').hasError('required')"
+                >
+                    La razon es requerida
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Anamnesis -->
+            <mat-form-field class="col-span-4">
+                <mat-label>{{ "labels.anamnesis" | transloco }}</mat-label>
+                <textarea
+                    id="anamnesis"
+                    matInput
+                    [formControlName]="'anamnesis'"
+                ></textarea>
+                <mat-error
+                    *ngIf="consultaForm.get('anamnesis').hasError('required')"
+                >
+                    La anamnesis es requerida
+                </mat-error>
+            </mat-form-field>
+            <!-- CF -->
+            <mat-form-field class="col-start-1 col-span-2">
+                <mat-label>{{ "labels.cardiac_freq" | transloco }}</mat-label>
+                <input
+                    id="petCf"
+                    matInput
+                    type="number"
+                    [formControlName]="'petCf'"
+                />
+                <mat-error
+                    *ngIf="consultaForm.get('petCf').hasError('required')"
+                >
+                    La frecuencia cardiaca es requerida
+                </mat-error>
+            </mat-form-field>
+
+            <!-- RF -->
+            <mat-form-field class="col-span-2">
+                <mat-label>{{
+                    "labels.respiratory_freq" | transloco
+                }}</mat-label>
+                <input
+                    id="petRf"
+                    matInput
+                    type="number"
+                    [formControlName]="'petRf'"
+                />
+                <mat-error
+                    *ngIf="consultaForm.get('petRf').hasError('required')"
+                >
+                    La frecuencia respiratoria es requerida
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Pulse -->
+            <mat-form-field class="col-span-2">
+                <mat-label>{{ "labels.pulse" | transloco }}</mat-label>
+                <input
+                    id="petPulse"
+                    matInput
+                    type="number"
+                    [formControlName]="'petPulse'"
+                />
+                <mat-error
+                    *ngIf="consultaForm.get('petPulse').hasError('required')"
+                >
+                    El pulso es requerido
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Temperature -->
+            <mat-form-field class="col-span-2">
+                <mat-label>{{ "labels.temperature" | transloco }}</mat-label>
+                <input
+                    id="petTemperature"
+                    matInput
+                    type="number"
+                    [formControlName]="'petTemperature'"
+                />
+                <mat-error
+                    *ngIf="
+                        consultaForm.get('petTemperature').hasError('required')
+                    "
+                >
+                    La temperatura es requerida
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Weight -->
+            <mat-form-field class="col-span-2">
+                <mat-label>{{
+                    "labels.consultation_weight" | transloco
+                }}</mat-label>
+                <input
+                    id="petConsultationWeight"
+                    matInput
+                    type="number"
+                    [formControlName]="'petConsultationWeight'"
+                />
+                <mat-error
+                    *ngIf="
+                        consultaForm
+                            .get('petConsultationWeight')
+                            .hasError('required')
+                    "
+                >
+                    El peso es requerido
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Attitude -->
+            <mat-form-field class="col-start-1 col-span-2">
+                <mat-label>{{ "labels.pet_attitude" | transloco }}</mat-label>
+                <mat-select [formControlName]="'petAttitude'">
+                    <mat-option
+                        *ngFor="let status of statusValues"
+                        [value]="status"
+                        >{{ status }}</mat-option
+                    >
+                </mat-select>
+            </mat-form-field>
+
+            <!-- Corporal condition -->
+            <mat-form-field class="col-span-2">
+                <mat-label>{{
+                    "labels.corporal_condition" | transloco
+                }}</mat-label>
+                <mat-select [formControlName]="'petCorporalCondition'">
+                    <mat-option
+                        *ngFor="let status of statusValues"
+                        [value]="status"
+                        >{{ status }}</mat-option
+                    >
+                </mat-select>
+            </mat-form-field>
+
+            <!-- Hidration State -->
+            <mat-form-field class="col-span-2">
+                <mat-label>{{
+                    "labels.hidratation_state" | transloco
+                }}</mat-label>
+                <mat-select [formControlName]="'petHidratationState'">
+                    <mat-option
+                        *ngFor="let status of statusValues"
+                        [value]="status"
+                        >{{ status }}</mat-option
+                    >
+                </mat-select>
+            </mat-form-field>
+
+            <div class="col-start-1 col-span-12">
+                <button
+                    mat-raised-button
+                    color="primary"
+                    type="button"
+                    [disabled]="consultaForm.disabled"
+                    (click)="openAddItemToTreatmentModal()"
+                >
+                    Anadir a la receta
+                </button>
+            </div>
+
+            <table
+                mat-table
+                [dataSource]="treatmentDataSource"
+                class="col-start-1 col-span-12 mat-elevation-z8"
+            >
+                <!-- Position Column -->
+                <ng-container matColumnDef="productName">
+                    <th mat-header-cell *matHeaderCellDef>
+                        Nombre del producto
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.productName }}
+                    </td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="posology">
+                    <th mat-header-cell *matHeaderCellDef>Posologia</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.posology }}
+                    </td>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="totalDose">
+                    <th mat-header-cell *matHeaderCellDef>Dosis total</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.totalDose }}
+                    </td>
+                </ng-container>
+
+                <tr
+                    mat-header-row
+                    *matHeaderRowDef="treatmentDisplayedColums"
+                ></tr>
+                <tr
+                    mat-row
+                    *matRowDef="let row; columns: treatmentDisplayedColums"
+                ></tr>
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">No hay datos</td>
+                </tr>
+            </table>
+
+            <div class="col-start-1 col-span-12 flex justify-end">
+                <button
+                    mat-flat-button
+                    type="submit"
+                    [color]="'primary'"
+                    [disabled]="consultaForm.disabled"
+                    (click)="save()"
+                >
+                    <span *ngIf="!consultaForm.disabled || consultaSaved">
+                        Guardar consulta
+                    </span>
+                    <mat-progress-spinner
+                        *ngIf="consultaForm.disabled && !consultaSaved"
+                        [diameter]="24"
+                        [mode]="'indeterminate'"
+                    ></mat-progress-spinner>
+                </button>
+            </div>
+        </ng-container>
+    </form>
+</div>

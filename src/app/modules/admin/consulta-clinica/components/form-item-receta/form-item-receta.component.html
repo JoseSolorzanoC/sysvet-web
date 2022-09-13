@@ -1,0 +1,64 @@
+<div mat-dialog-title>Nuevo Item de receta</div>
+<form [formGroup]="itemForm" mat-dialog-content>
+    <!-- Document Number field -->
+    <mat-form-field class="w-full">
+        <mat-label>{{ "labels.product_name" | transloco }}</mat-label>
+        <input id="productName" matInput [formControlName]="'productName'" />
+        <mat-error *ngIf="itemForm.get('productName').hasError('required')">
+            El nombre del producto es requerido
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-full">
+        <mat-label>{{ "labels.posology" | transloco }}</mat-label>
+        <input id="posology" matInput [formControlName]="'posology'" />
+        <mat-error *ngIf="itemForm.get('posology').hasError('required')">
+            La posologia es requerida
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-full">
+        <mat-label>{{ "labels.total_dose" | transloco }}</mat-label>
+        <input
+            id="totalDose"
+            matInput
+            type="number"
+            [formControlName]="'totalDose'"
+        />
+        <mat-error *ngIf="itemForm.get('totalDose').hasError('required')">
+            La dosis total es requerida
+        </mat-error>
+    </mat-form-field>
+
+    <!-- Submit button -->
+    <div class="flex flex-col sm:flex-row gap-1 justify-end">
+        <button
+            mat-flat-button
+            type="submit"
+            [color]="'primary'"
+            [disabled]="itemForm.disabled"
+            (click)="save()"
+        >
+            <span *ngIf="!itemForm.disabled">
+                {{
+                    itemSaved
+                        ? ("buttons.update" | transloco)
+                        : ("buttons.save" | transloco)
+                }}
+            </span>
+            <mat-progress-spinner
+                *ngIf="itemForm.disabled"
+                [diameter]="24"
+                [mode]="'indeterminate'"
+            ></mat-progress-spinner>
+        </button>
+        <button
+            mat-flat-button
+            color="warn"
+            type="button"
+            (click)="dialogRef.close()"
+        >
+            {{ "buttons.close" | transloco }}
+        </button>
+    </div>
+</form>

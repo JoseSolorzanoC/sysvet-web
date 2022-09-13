@@ -19,7 +19,19 @@
         "last_weight": "Utlimo peso registrado (Kilogramos)",
         "pet_image": "Imagen de la mascota",
         "reason": "Razon",
-        "date": "Fecha"
+        "date": "Fecha",
+        "anamnesis": "Anamnesis",
+        "cardiac_freq": "Frecuencia Cardiaca",
+        "respiratory_freq": "Frecuancia Respiratoria",
+        "pulse": "Pulso",
+        "temperature": "Temperatura",
+        "consultation_weight": "Peso de la mascota (kg)",
+        "pet_attitude": "Actitud general de la mascota",
+        "corporal_condition": "Condicion corporal",
+        "hidratation_state": "Estado de hidratacion",
+        "product_name": "Nombre del producto",
+        "posology": "Posologia",
+        "total_dose": "Dosis total"
     },
     "buttons": {
         "new_pet": "Nueva Mascota",

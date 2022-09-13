@@ -155,6 +155,13 @@ export const appRoutes: Route[] = [
                         (m) => m.MedicosModule
                     ),
             },
+            {
+                path: 'consulta-medica',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/consulta-clinica/consulta-clinica.module'
+                    ).then((m) => m.ConsultaClinicaModule),
+            },
         ],
     },
 ];
