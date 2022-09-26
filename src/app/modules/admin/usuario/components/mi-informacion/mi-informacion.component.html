@@ -1,9 +1,58 @@
 <div class="w-full flex justify-center p-6">
     <div
-        class="w-1/3 flex flex-col gap-1 justify-center text-center bg-white rounded"
+        class="w-full sm:w-2/3 md:w-1/3 flex flex-col gap-2 justify-start text-center"
         *ngIf="user"
     >
-        <span>{{ user.email }}</span>
-        <span>{{ user.role }}</span>
+        <button
+            mat-fab
+            class="ml-auto"
+            color="primary"
+            aria-label="Edit profile info"
+            (click)="toggleEditMode()"
+            [matTooltip]="!editMode ? 'Editar informacion' : 'Guardar cambios'"
+        >
+            <mat-icon *ngIf="!isLoading">{{
+                editMode ? "save" : "edit"
+            }}</mat-icon>
+            <mat-progress-spinner
+                *ngIf="isLoading"
+                [diameter]="24"
+                [mode]="'indeterminate'"
+            ></mat-progress-spinner>
+        </button>
+        <form [formGroup]="profileForm">
+            <mat-form-field class="w-full">
+                <mat-label>Correo electronico</mat-label>
+                <input matInput formControlName="email" />
+            </mat-form-field>
+            <mat-form-field class="w-full">
+                <mat-label>Contrasena</mat-label>
+                <input matInput type="password" formControlName="password" />
+            </mat-form-field>
+            <ng-container formGroupName="person">
+                <mat-form-field class="w-full">
+                    <mat-label>Nombres Completos</mat-label>
+                    <input matInput formControlName="fullName" />
+                </mat-form-field>
+                <mat-form-field class="w-full">
+                    <mat-label>Fecha de Nacimiento</mat-label>
+                    <input
+                        matInput
+                        [matDatepicker]="picker"
+                        formControlName="birthDate"
+                    />
+                    <mat-hint>dd/mm/aaaa</mat-hint>
+                    <mat-datepicker-toggle
+                        matSuffix
+                        [for]="picker"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field class="w-full">
+                    <mat-label>Telefono</mat-label>
+                    <input matInput formControlName="cellphone" />
+                </mat-form-field>
+            </ng-container>
+        </form>
     </div>
 </div>

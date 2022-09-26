@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { SharedService } from 'app/shared/shared.service';
+import moment from 'moment';
 import { TurnosService } from '../../services/turnos.service';
 import { FormTurnosComponent } from '../form-turnos/form-turnos.component';
 
@@ -35,6 +36,10 @@ export class ListTurnosComponent implements OnInit {
                     this.getTurnosList();
                 }
             });
+    }
+
+    parseDate(date: any): string {
+        return moment(date).format('DD-MM-YYYY');
     }
 
     ngOnInit(): void {}

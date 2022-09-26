@@ -66,13 +66,15 @@
         </mat-error>
     </mat-form-field>
 
-    <mat-form-field class="w-full">
-        <mat-label>{{ "labels.pet_image" | transloco }}</mat-label>
-        <input id="pet_image" matInput [formControlName]="'photoUrl'" />
+    <div class="w-full flex flex-col gap-y-1">
+        <mat-label class="font-medium">{{
+            "labels.pet_image" | transloco
+        }}</mat-label>
+        <input id="pet_image" type="file" (change)="setPetImage($event)" />
         <mat-error *ngIf="mascotaForm.get('photoUrl').hasError('pattern')">
             La url de la imagen no es valida
         </mat-error>
-    </mat-form-field>
+    </div>
 
     <!-- Submit button -->
     <div class="flex flex-col sm:flex-row justify-end gap-1">

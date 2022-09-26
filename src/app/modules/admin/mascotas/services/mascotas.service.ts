@@ -25,14 +25,38 @@ export class MascotasService {
         return this.httpClient.get<any[]>(url);
     }
 
-    savePet(pet: any): Observable<any> {
+    savePet(pet: any, file: File): Observable<any> {
+        const formData = new FormData();
+        if (file) {
+            formData.append('file', file, file.name);
+        }
+        formData.append('specieId', pet.specieId);
+        formData.append('name', pet.name);
+        formData.append('birthDate', pet.birthDate);
+        formData.append('furColor', pet.furColor);
+        formData.append('lastWeight', pet.lastWeight);
+        formData.append('raceId', pet.raceId);
+
         const url = `${environment.apiUrl}/pets/new`;
-        return this.httpClient.post<any>(url, pet);
+        return this.httpClient.post<any>(url, formData);
     }
 
-    updatePet(id: string, pet: any): Observable<any> {
+    updatePet(id: string, pet: any, file: File): Observable<any> {
+        const formData = new FormData();
+        if (file) {
+            formData.append('file', file, file.name);
+        } else {
+            formData.append('photoUrl', pet.photoUrl);
+        }
+        formData.append('specieId', pet.specieId);
+        formData.append('name', pet.name);
+        formData.append('birthDate', pet.birthDate);
+        formData.append('furColor', pet.furColor);
+        formData.append('lastWeight', pet.lastWeight);
+        formData.append('raceId', pet.raceId);
+
         const url = `${environment.apiUrl}/pets/update/${id}`;
-        return this.httpClient.put<any>(url, pet);
+        return this.httpClient.put<any>(url, formData);
     }
 
     getPetById(id: string): Observable<any> {

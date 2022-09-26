@@ -13,9 +13,9 @@ export class AuthSignOutComponent implements OnInit, OnDestroy {
     countdown: number = 5;
     countdownMapping: any = {
         // eslint-disable-next-line @typescript-eslint/naming-convention
-        '=1': '# second',
+        '=1': '# segundo',
         // eslint-disable-next-line quote-props
-        other: '# seconds',
+        other: '# segundos',
     };
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 

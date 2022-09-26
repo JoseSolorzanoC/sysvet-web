@@ -16,6 +16,7 @@ export class FormMascotasComponent implements OnInit {
     petSpecies: PetSpecie[] = [];
     petSaved = false;
     petId: string;
+    file: File = null;
 
     constructor(
         private _fb: FormBuilder,
@@ -46,7 +47,7 @@ export class FormMascotasComponent implements OnInit {
             furColor: [this.data?.furColor, Validators.required],
             lastWeight: [this.data?.lastWeight, Validators.required],
             photoUrl: [
-                this.data?.photoUrl,
+                this.data?.photoUrl ?? '',
                 [
                     Validators.pattern(
                         /(http[s]*:\/\/)([a-z\-_0-9\/.]+)\.([a-z.]{2,3})\/([a-z0-9\-_\/._~:?#\[\]@!$&'()*+,;=%]*)([a-z0-9]+\.)(jpg|jpeg|png)/i
@@ -54,6 +55,10 @@ export class FormMascotasComponent implements OnInit {
                 ],
             ],
         });
+    }
+
+    setPetImage($event: any): void {
+        this.file = $event.target.files[0];
     }
 
     save(): void {
@@ -66,7 +71,7 @@ export class FormMascotasComponent implements OnInit {
 
         if (!this.petSaved) {
             this.mascotasService
-                .savePet(this.mascotaForm.value)
+                .savePet(this.mascotaForm.value, this.file)
                 .subscribe((res) => {
                     this._snackBar.open('Mascota registrada.', 'OK', {
                         horizontalPosition: 'right',
@@ -80,7 +85,7 @@ export class FormMascotasComponent implements OnInit {
                 });
         } else {
             this.mascotasService
-                .updatePet(this.petId, this.mascotaForm.value)
+                .updatePet(this.petId, this.mascotaForm.value, this.file)
                 .subscribe((res) => {
                     this._snackBar.open(
                         'Informacion de la mascota actualizada.',

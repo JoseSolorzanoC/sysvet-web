@@ -1,70 +1,64 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
-import { MedicoPersona } from 'app/shared/interfaces';
 import { SharedService } from 'app/shared/shared.service';
-import moment from 'moment';
-import { MedicosService } from '../../services/medicos.service';
-import { FormMedicosComponent } from '../form-medicos/form-medicos.component';
+import { ProductosService } from '../../services/productos.service';
+import { FormProductoComponent } from '../form-producto/form-producto.component';
 
 @Component({
-    selector: 'app-list-medicos',
-    templateUrl: './list-medicos.component.html',
-    styleUrls: ['./list-medicos.component.scss'],
+    selector: 'app-list-productos',
+    templateUrl: './list-productos.component.html',
+    styleUrls: ['./list-productos.component.scss'],
 })
-export class ListMedicosComponent implements OnInit {
-    medicos: any[] = [];
+export class ListProductosComponent implements OnInit {
+    productos: any[] = [];
     isLoading = true;
 
     constructor(
-        private medicosService: MedicosService,
+        private productosService: ProductosService,
         private matDialog: MatDialog,
         private fuseConfirmationService: FuseConfirmationService,
         private sharedService: SharedService
     ) {
-        this.getMedicosList();
+        this.getProductosList();
     }
 
-    openNewMedicoModal(): void {
+    openNewProductoModal(): void {
         this.matDialog
-            .open(FormMedicosComponent, {
+            .open(FormProductoComponent, {
                 disableClose: true,
                 panelClass: ['w-full', 'md:w-2/4', 'lg:w-2/5', 'xl:w-1/4'],
             })
             .afterClosed()
             .subscribe((res) => {
-                this.getMedicosList();
+                this.getProductosList();
             });
     }
 
-    parseDate(date: any): string {
-        return moment(date).format('DD-MM-YYYY');
-    }
-
-    openUpdateMedicoModal(medico: MedicoPersona): void {
+    openUpdateProductoModal(producto: any): void {
         this.matDialog
-            .open(FormMedicosComponent, {
+            .open(FormProductoComponent, {
                 disableClose: true,
                 panelClass: ['w-full', 'md:w-2/4', 'lg:w-2/5', 'xl:w-1/4'],
-                data: medico,
+                data: producto,
             })
             .afterClosed()
             .subscribe((res) => {
-                this.getMedicosList();
+                this.getProductosList();
             });
     }
 
     ngOnInit(): void {}
 
-    getMedicosList(): void {
+    getProductosList(): void {
         this.isLoading = true;
-        this.medicosService.getAllMedicos().subscribe((medicos) => {
+        this.productosService.getAllProductos().subscribe((productos) => {
             this.isLoading = false;
-            this.medicos = medicos;
+            this.productos = productos;
         });
     }
 
-    deleteDoctorById(doctorId: string): void {
+    deleteProductoById(productId: string): void {
         this.fuseConfirmationService
             .open({
                 title: 'alerts.you_sure_delete_label',
@@ -86,10 +80,10 @@ export class ListMedicosComponent implements OnInit {
             .subscribe((res) => {
                 if (res === 'confirmed') {
                     this.isLoading = true;
-                    this.medicosService.deleteDoctor(doctorId).subscribe(
+                    this.productosService.deleteProducto(productId).subscribe(
                         () => {
                             this.isLoading = false;
-                            this.getMedicosList();
+                            this.getProductosList();
                             this.sharedService.showAlert('alerts.delete_ok');
                         },
                         () => {

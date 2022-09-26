@@ -56,10 +56,11 @@ export class UserService {
      *
      * @param user
      */
-    update(user: User): Observable<any> {
-        return this._httpClient.patch<User>('api/common/user', { user }).pipe(
-            map((response) => {
-                this._user.next(response);
+    update(user: any): Observable<any> {
+        const url = `${environment.apiUrl}/users/update-profile`;
+        return this._httpClient.put<any>(url, user).pipe(
+            map(() => {
+                this.get().subscribe();
             })
         );
     }

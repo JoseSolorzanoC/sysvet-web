@@ -28,7 +28,7 @@
     </mat-form-field>
 
     <mat-form-field class="w-full">
-        <mat-label>Mascotas</mat-label>
+        <mat-label>Mascotas a atender</mat-label>
         <mat-select [formControlName]="'pets'" multiple>
             <mat-option *ngFor="let pet of pets" [value]="pet.id">{{
                 pet.name

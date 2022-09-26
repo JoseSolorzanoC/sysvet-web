@@ -20,28 +20,45 @@
     >
         <span>No existen registros.</span>
     </div>
-    <div *ngIf="consultas.length > 0" class="w-full">
+    <div *ngIf="consultas.length > 0" class="w-full flex flex-col gap-y-1">
         <div *ngFor="let consulta of consultas" class="w-full">
             <div
-                class="bg-gray-200 rounded-md shadow-md p-2 text-md flex flex-col md:flex-row justify-between items-center"
+                class="bg-gray-200 rounded-md shadow-md p-2 text-md flex flex-col gap-y-2 md:flex-row justify-between items-center"
             >
-                <div class="flex items-center gap-x-2">
-                    <mat-icon>pets</mat-icon>{{ consulta.pet.name }}
+                <div class="flex items-center justify-center gap-x-2 w-1/5">
+                    <mat-icon matTooltip="Mascota atendida">pets</mat-icon
+                    >{{ consulta.pet.name }}
                 </div>
-                <div class="flex items-center gap-x-2">
-                    <mat-icon>text_format</mat-icon>
+                <div class="flex items-center justify-center gap-x-2 w-1/5">
+                    <mat-icon matTooltip="Razon de la consulta"
+                        >text_format</mat-icon
+                    >
                     {{ consulta.reason }}
                 </div>
-                <div class="flex items-center gap-x-2">
-                    <mat-icon>event</mat-icon>
-                    {{ consulta.openedDate ?? "No definida" }}
+                <div class="flex items-center justify-center gap-x-2 w-1/5">
+                    <mat-icon matTooltip="Fecha de consulta (dd-mm-aaaa)"
+                        >event</mat-icon
+                    >
+                    {{
+                        consulta.openedDate
+                            ? parseDate(consulta.openedDate)
+                            : "No definida"
+                    }}
                 </div>
-                <div class="flex items-center gap-x-2">
-                    <mat-icon>scale</mat-icon>
-                    {{ consulta.petConsultationWeight }}
+                <div
+                    class="flex items-center justify-center gap-x-2 w-1/5 text-center"
+                >
+                    <mat-icon
+                        matTooltip="Peso de la mascota en la consulta (kilogramos)"
+                        >scale</mat-icon
+                    >
+                    {{ consulta.petConsultationWeight }} kg
                 </div>
-                <div class="flex flex-row gap-1">
+                <div
+                    class="flex flex-row justify-center gap-1 w-1/5 text-center"
+                >
                     <button
+                        class="mx-auto"
                         mat-raised-button
                         (click)="goToSeeConsulta(consulta.id)"
                     >

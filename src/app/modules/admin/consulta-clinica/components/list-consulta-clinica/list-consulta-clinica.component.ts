@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import moment from 'moment';
 import { ConsultaClinicaService } from '../../services/consulta-clinica.service';
 
 @Component({
@@ -18,6 +19,10 @@ export class ListConsultaClinicaComponent implements OnInit {
 
     ngOnInit(): void {
         this.getConsultasList();
+    }
+
+    parseDate(date: any): string {
+        return moment(date).format('DD-MM-YYYY');
     }
 
     goToNuevaConsulta(): void {

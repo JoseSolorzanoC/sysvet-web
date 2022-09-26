@@ -10,10 +10,10 @@
         <!-- Navigation header hook -->
         <ng-container fuseVerticalNavigationContentHeader>
             <!-- Logo -->
-            <div class="flex items-center h-20 pt-6 px-8">
+            <div class="flex items-center h-20 pt-6 px-8 mb-4">
                 <img
-                    class="w-24"
-                    src="assets/images/logo/logo-text-on-dark.svg"
+                    class="w-32"
+                    src="assets/images/logo/logo-sysvet-text-on-dark.svg"
                     alt="Logo image"
                 />
             </div>
@@ -64,7 +64,10 @@
                         >{{ user?.role }}</span
                     >
                     <!-- <languages></languages> -->
-                    <fuse-fullscreen class="hidden md:block"></fuse-fullscreen>
+                    <fuse-fullscreen
+                        tooltip="Alternar pantalla completa"
+                        class="hidden md:block"
+                    ></fuse-fullscreen>
                     <!-- <search [appearance]="'bar'"></search>
                     <shortcuts></shortcuts>
                     <messages></messages>

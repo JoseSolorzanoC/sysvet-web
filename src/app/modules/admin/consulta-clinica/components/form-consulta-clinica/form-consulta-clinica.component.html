@@ -1,13 +1,21 @@
 <div class="w-full p-6">
     <form [formGroup]="consultaForm" class="grid grid-cols-12 gap-2">
-        <mat-form-field class="col-start-1 col-span-3">
-            <mat-label>Seleccione mascota a atender</mat-label>
-            <mat-select [formControlName]="'petId'">
-                <mat-option *ngFor="let pet of pets" [value]="pet.id">{{
-                    pet.name
-                }}</mat-option>
-            </mat-select>
-        </mat-form-field>
+        <div class="col-start-1 col-span-4 flex flex-row gap-4">
+            <mat-form-field class="w-2/3">
+                <mat-label>Seleccione mascota a atender</mat-label>
+                <mat-select [formControlName]="'petId'">
+                    <mat-option *ngFor="let pet of pets" [value]="pet.id">{{
+                        pet.name
+                    }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-progress-spinner
+                class="self-center"
+                *ngIf="isLoading"
+                [diameter]="24"
+                [mode]="'indeterminate'"
+            ></mat-progress-spinner>
+        </div>
         <ng-container *ngIf="consultaForm.controls.petId.value">
             <!-- Reason -->
             <mat-form-field class="col-start-1 col-span-4">

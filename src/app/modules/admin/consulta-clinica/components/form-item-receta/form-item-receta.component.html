@@ -1,11 +1,28 @@
 <div mat-dialog-title>Nuevo Item de receta</div>
 <form [formGroup]="itemForm" mat-dialog-content>
-    <!-- Document Number field -->
-    <mat-form-field class="w-full">
-        <mat-label>{{ "labels.product_name" | transloco }}</mat-label>
-        <input id="productName" matInput [formControlName]="'productName'" />
+    <mat-form-field class="w-full" *ngIf="!isLoading">
+        <mat-label>Producto</mat-label>
+        <input
+            type="text"
+            aria-label="Number"
+            matInput
+            [formControlName]="'productName'"
+            [matAutocomplete]="auto"
+        />
+        <mat-autocomplete
+            #auto="matAutocomplete"
+            (optionSelected)="productSelected($event)"
+            [displayWith]="displayProductFn"
+        >
+            <mat-option
+                *ngFor="let product of filteredProducts | async"
+                [value]="product"
+            >
+                {{ product.productName }}
+            </mat-option>
+        </mat-autocomplete>
         <mat-error *ngIf="itemForm.get('productName').hasError('required')">
-            El nombre del producto es requerido
+            El producto es requerido
         </mat-error>
     </mat-form-field>
 

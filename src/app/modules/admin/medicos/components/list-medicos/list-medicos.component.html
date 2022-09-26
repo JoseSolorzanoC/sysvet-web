@@ -20,27 +20,34 @@
     >
         <span>No existen registros.</span>
     </div>
-    <div *ngIf="medicos.length > 0" class="w-full">
+    <div *ngIf="medicos.length > 0" class="w-full flex flex-col gap-y-1">
         <div *ngFor="let medico of medicos" class="w-full">
             <div
-                class="bg-gray-200 rounded-md shadow-md p-2 text-md flex flex-col md:flex-row justify-between items-center"
+                class="bg-gray-200 rounded-md shadow-md p-2 text-md flex flex-col gap-y-2 md:flex-row justify-between items-center"
             >
-                <div class="flex items-center gap-x-2">
-                    <mat-icon>text_format</mat-icon>{{ medico.person.fullName }}
+                <div class="flex items-center gap-x-2 justify-center w-1/5">
+                    <mat-icon matTooltip="Nombre">text_format</mat-icon
+                    >{{ medico.person.fullName }}
                 </div>
-                <div class="flex items-center gap-x-2">
-                    <mat-icon>call</mat-icon>
+                <div class="flex items-center gap-x-2 justify-center w-1/5">
+                    <mat-icon matTooltip="Numero telefonico">call</mat-icon>
                     {{ medico.person.cellphone }}
                 </div>
-                <div class="flex items-center gap-x-2">
-                    <mat-icon>event</mat-icon>
-                    {{ medico.person.birthDate ?? "No definida" }}
+                <div class="flex items-center gap-x-2 justify-center w-1/5">
+                    <mat-icon matTooltip="Fecha de nacimiento (dd-mm-aaaa)"
+                        >event</mat-icon
+                    >
+                    {{
+                        medico.person.birthDate
+                            ? parseDate(medico.person.birthDate)
+                            : "No definida"
+                    }}
                 </div>
-                <div class="flex items-center gap-x-2">
-                    <mat-icon>mail</mat-icon>
+                <div class="flex items-center gap-x-2 justify-center w-1/5">
+                    <mat-icon matTooltip="Correo electronico">mail</mat-icon>
                     {{ medico.email }}
                 </div>
-                <div class="flex flex-row gap-1">
+                <div class="flex flex-row gap-1 justify-center w-1/5">
                     <button
                         mat-raised-button
                         (click)="openUpdateMedicoModal(medico)"

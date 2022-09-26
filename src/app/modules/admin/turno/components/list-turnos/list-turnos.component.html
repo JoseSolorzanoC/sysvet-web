@@ -20,23 +20,30 @@
     >
         <span>No existen registros.</span>
     </div>
-    <div *ngIf="turnos.length > 0" class="w-full">
+    <div *ngIf="turnos.length > 0" class="w-full flex flex-col gap-y-1">
         <div *ngFor="let turno of turnos" class="w-full">
             <div
-                class="bg-gray-200 rounded-md shadow-md p-2 text-md flex flex-col md:flex-row justify-between items-center"
+                class="bg-gray-200 rounded-md shadow-md p-2 text-md flex flex-col gap-y-2 md:flex-row justify-between items-center"
             >
-                <div class="flex items-center gap-x-2">
-                    <mat-icon>event</mat-icon>{{ turno.date }}
+                <div class="flex items-center gap-x-2 justify-center w-1/4">
+                    <mat-icon matTooltip="Fecha de atencion (dd-mm-aaaa)"
+                        >event</mat-icon
+                    >{{ parseDate(turno.date) }}
                 </div>
-                <div class="flex items-center gap-x-2">
-                    <mat-icon>text_format</mat-icon>
+                <div class="flex items-center gap-x-2 justify-center w-1/4">
+                    <mat-icon matTooltip="Motivo de atencion"
+                        >text_format</mat-icon
+                    >
                     {{ turno.reason }}
                 </div>
-                <div class="flex items-center gap-x-2">
-                    <mat-icon>list</mat-icon>
+                <div class="flex items-center gap-x-2 justify-center w-1/4">
+                    <mat-icon
+                        matTooltip="Cantidad de mascotas registradas en turno"
+                        >list</mat-icon
+                    >
                     {{ turno.appointmentPets.length }} Mascotas
                 </div>
-                <div class="flex flex-row gap-1">
+                <div class="flex flex-row gap-1 justify-center w-1/4">
                     <button
                         mat-raised-button
                         color="warn"

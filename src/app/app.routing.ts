@@ -162,6 +162,13 @@ export const appRoutes: Route[] = [
                         'app/modules/admin/consulta-clinica/consulta-clinica.module'
                     ).then((m) => m.ConsultaClinicaModule),
             },
+            {
+                path: 'productos',
+                loadChildren: () =>
+                    import('app/modules/admin/productos/productos.module').then(
+                        (m) => m.ProductosModule
+                    ),
+            },
         ],
     },
 ];

@@ -27,6 +27,7 @@ export class FormConsultaClinicaComponent implements OnInit {
     statusValues = ['Bueno/a', 'Regular', 'Malo/a'];
     consultaSaved = false;
     consultaId: string;
+    isLoading = false;
 
     constructor(
         private mascotasService: MascotasService,
@@ -46,11 +47,14 @@ export class FormConsultaClinicaComponent implements OnInit {
         });
 
         if (this.consultaId) {
+            this.consultaForm.disable();
+            this.isLoading = true;
             this.consultaSaved = true;
             this.consultaService
                 .getConsultationById(this.consultaId)
                 .subscribe((res) => {
                     this.consultaData = res;
+                    this.isLoading = false;
                     this.setConsultaForm();
                     this.consultaForm.disable();
                     this.treatmentDataSource.data =

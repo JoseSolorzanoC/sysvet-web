@@ -1,0 +1,57 @@
+<div class="w-full p-6 flex flex-col gap-y-4">
+    <div class="flex flex-row items-center gap-x-2">
+        <button
+            mat-raised-button
+            color="primary"
+            type="button"
+            (click)="openNewProductoModal()"
+        >
+            Nuevo Producto
+        </button>
+        <mat-progress-spinner
+            *ngIf="isLoading"
+            [diameter]="24"
+            [mode]="'indeterminate'"
+        ></mat-progress-spinner>
+    </div>
+    <div
+        *ngIf="productos.length <= 0"
+        class="bg-gray-200 rounded-md shadow-md p-6 text-md flex justify-center"
+    >
+        <span>No existen registros.</span>
+    </div>
+    <div *ngIf="productos.length > 0" class="w-full flex flex-col gap-y-1">
+        <div *ngFor="let producto of productos" class="w-full">
+            <div
+                class="bg-gray-200 rounded-md shadow-md p-2 text-md flex flex-col gap-y-2 md:flex-row justify-between items-center"
+            >
+                <div class="flex items-center justify-center gap-x-2 w-1/3">
+                    <mat-icon matTooltip="Nombre del Producto"
+                        >text_format</mat-icon
+                    >{{ producto.productName }}
+                </div>
+                <div class="flex items-center gap-x-2 justify-center w-1/3">
+                    <mat-icon matTooltip="Stock actual del producto"
+                        >production_quantity_limits</mat-icon
+                    >
+                    {{ producto.currentStock }}
+                </div>
+                <div class="flex flex-row gap-1 justify-center w-1/3">
+                    <button
+                        mat-raised-button
+                        (click)="openUpdateProductoModal(producto)"
+                    >
+                        {{ "buttons.update" | transloco }}
+                    </button>
+                    <button
+                        mat-raised-button
+                        color="warn"
+                        (click)="deleteProductoById(producto.id)"
+                    >
+                        {{ "buttons.delete" | transloco }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

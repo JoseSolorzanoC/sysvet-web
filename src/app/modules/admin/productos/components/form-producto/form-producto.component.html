@@ -1,0 +1,61 @@
+<div mat-dialog-title>Nuevo Producto</div>
+<form [formGroup]="productoForm" mat-dialog-content>
+    <!-- Document Number field -->
+    <mat-form-field class="w-full">
+        <mat-label>Nombre del producto</mat-label>
+        <input id="productName" matInput [formControlName]="'productName'" />
+        <mat-error *ngIf="productoForm.get('productName').hasError('required')">
+            El nombre del producto es requerido
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-full">
+        <mat-label>Stock</mat-label>
+        <input
+            id="stock"
+            matInput
+            [formControlName]="'currentStock'"
+            type="number"
+            min="0"
+        />
+        <mat-error
+            *ngIf="productoForm.get('currentStock').hasError('required')"
+        >
+            El stock es requerido
+        </mat-error>
+        <mat-error *ngIf="productoForm.get('currentStock').hasError('min')">
+            El stock debe ser mayor o igual a 0
+        </mat-error>
+    </mat-form-field>
+    <!-- Submit button -->
+    <div class="flex flex-col sm:flex-row gap-1 justify-end">
+        <button
+            mat-flat-button
+            type="submit"
+            [color]="'primary'"
+            [disabled]="productoForm.disabled"
+            (click)="save()"
+        >
+            <span *ngIf="!productoForm.disabled">
+                {{
+                    productoSaved
+                        ? ("buttons.update" | transloco)
+                        : ("buttons.save" | transloco)
+                }}
+            </span>
+            <mat-progress-spinner
+                *ngIf="productoForm.disabled"
+                [diameter]="24"
+                [mode]="'indeterminate'"
+            ></mat-progress-spinner>
+        </button>
+        <button
+            mat-flat-button
+            color="warn"
+            type="button"
+            (click)="dialogRef.close(productoSaved)"
+        >
+            {{ "buttons.close" | transloco }}
+        </button>
+    </div>
+</form>
