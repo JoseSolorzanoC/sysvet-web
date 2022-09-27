@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { SharedService } from 'app/shared/shared.service';
 import moment from 'moment';
@@ -19,7 +20,9 @@ export class ListMascotasComponent implements OnInit {
         private mascotasService: MascotasService,
         private matDialog: MatDialog,
         private fuseConfirmationService: FuseConfirmationService,
-        private sharedService: SharedService
+        private sharedService: SharedService,
+        private router: Router,
+        private route: ActivatedRoute
     ) {
         this.getPetsList();
     }
@@ -36,6 +39,12 @@ export class ListMascotasComponent implements OnInit {
                     this.getPetsList();
                 }
             });
+    }
+
+    goToInfo(petId: string): void {
+        this.router.navigate(['info', petId], {
+            relativeTo: this.route,
+        });
     }
 
     openUpdatePetModal(pet: any): void {

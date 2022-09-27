@@ -1,0 +1,130 @@
+<div
+    class="flex flex-col gap-y-4 p-6 w-full items-center print:pt-20"
+    *ngIf="pet"
+>
+    <div class="w-full md:w-2/3 md:mx-auto flex justify-end print:hidden">
+        <button mat-raised-button color="primary" (click)="openPrintSaveView()">
+            Imprimir carnet
+        </button>
+    </div>
+    <div class="w-full md:w-2/3 md:mx-auto justify-center flex">
+        <span class="font-bold text-2xl">Reporte de Carnet Medico</span>
+    </div>
+    <div class="w-full md:w-2/3 md:mx-auto">
+        <div class="flex flex-row gap-x-2">
+            <div class="w-1/4 h-32">
+                <img
+                    [src]="pet.photoUrl"
+                    class="object-cover max-h-full h-full max-w-full w-full rounded-md shadow-md"
+                />
+            </div>
+            <div class="w-1/4 flex flex-col gap-y-1 justify-center">
+                <div
+                    class="border-2 rounded flex flex-col p-2 shadow-sm border-primary-300 items-center"
+                >
+                    <span class="font-bold">Nombre:</span>
+                    <span>{{ pet.name }}</span>
+                </div>
+
+                <div
+                    class="border-2 rounded flex flex-col p-2 shadow-sm border-primary-300 items-center"
+                >
+                    <span class="font-bold">Fecha de nacimiento:</span>
+                    <span>{{ parseDate(pet.birthDate) }}</span>
+                </div>
+            </div>
+            <div class="w-1/4 flex flex-col gap-y-1 justify-center">
+                <div
+                    class="border-2 rounded flex flex-col p-2 shadow-sm border-primary-300 items-center"
+                >
+                    <span class="font-bold">Raza:</span>
+                    <span>{{ pet.petRace.name }}</span>
+                </div>
+
+                <div
+                    class="border-2 rounded flex flex-col p-2 shadow-sm border-primary-300 items-center"
+                >
+                    <span class="font-bold">Especie:</span>
+                    <span>{{ pet.petSpecie.name }}</span>
+                </div>
+            </div>
+            <div class="w-1/4 flex flex-col gap-y-1 justify-center">
+                <div
+                    class="border-2 rounded flex flex-col p-2 shadow-sm border-primary-300 items-center"
+                >
+                    <span class="font-bold">Color de pelaje:</span>
+                    <span>{{ pet.furColor }}</span>
+                </div>
+
+                <div
+                    class="border-2 rounded flex flex-col p-2 shadow-sm border-primary-300 items-center"
+                >
+                    <span class="font-bold">Ultimo peso (kg):</span>
+                    <span>{{ pet.lastWeight }} kg</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="w-full md:w-2/3 md:mx-auto">
+        <div class="flex flex-row gap-x-2">
+            <div
+                class="w-2/6 border-2 rounded flex flex-col items-center p-2 shadow-sm border-primary-300"
+            >
+                <span class="font-bold">Nombre del Tutor:</span>
+                <span>{{ pet.tutor.person.fullName }}</span>
+            </div>
+            <div
+                class="w-2/6 border-2 rounded flex flex-col items-center p-2 shadow-sm border-primary-300"
+            >
+                <span class="font-bold">Email del Tutor:</span>
+                <span>{{ pet.tutor.email }}</span>
+            </div>
+            <div
+                class="w-2/6 border-2 rounded flex flex-col items-center p-2 shadow-sm border-primary-300"
+            >
+                <span class="font-bold">Telefono del Tutor:</span>
+                <span>{{ pet.tutor.person.cellphone }}</span>
+            </div>
+        </div>
+    </div>
+
+    <span class="font-bold uppercase text-primary"
+        >Ultimas 5 consultas medicas</span
+    >
+
+    <div class="w-full md:w-2/3 md:mx-auto border-2 border-primary-300 p-2">
+        <div class="flex flex-col gap-y-1 w-full">
+            <ng-container *ngIf="pet.clinicalConsultations.length <= 0">
+                <div
+                    class="border-2 rounded flex flex-row gap-x-2 items-center justify-around p-2 shadow-sm border-primary-300"
+                >
+                    <span>No existen consultas</span>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="pet.clinicalConsultations.length > 0">
+                <div
+                    *ngFor="let consultation of pet.clinicalConsultations"
+                    class="border-2 rounded flex flex-row gap-x-2 items-center justify-around p-2 shadow-sm border-primary-300"
+                >
+                    <div class="flex flex-col">
+                        <span class="font-bold">Fecha de consulta:</span>
+                        <span>{{ parseDate(consultation.openedDate) }}</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-bold">Motivo de consulta:</span>
+                        <span>{{ consultation.reason }}</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-bold">Actitud de la mascota:</span>
+                        <span>{{ consultation.petAttitude }}</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-bold">Peso en consulta (kg):</span>
+                        <span>{{ consultation.petConsultationWeight }} kg</span>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>
