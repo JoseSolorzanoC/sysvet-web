@@ -3,7 +3,12 @@
     <!-- Document Number field -->
     <mat-form-field class="w-full">
         <mat-label>Nombre del producto</mat-label>
-        <input id="productName" matInput [formControlName]="'productName'" />
+        <input
+            id="productName"
+            matInput
+            [formControlName]="'productName'"
+            placeholder="Ejemplo: Vitaminas XYZ (100mg)"
+        />
         <mat-error *ngIf="productoForm.get('productName').hasError('required')">
             El nombre del producto es requerido
         </mat-error>
@@ -17,6 +22,7 @@
             [formControlName]="'currentStock'"
             type="number"
             min="0"
+            placeholder="Ingrese stock actual del producto a registrar/actualizar"
         />
         <mat-error
             *ngIf="productoForm.get('currentStock').hasError('required')"

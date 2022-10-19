@@ -3,7 +3,10 @@
     <!-- Document type field-->
     <mat-form-field class="w-full">
         <mat-label>{{ "labels.document_type" | transloco }}</mat-label>
-        <mat-select formControlName="documentType">
+        <mat-select
+            formControlName="documentType"
+            placeholder="Seleccione el tipo de identificacion del medico"
+        >
             <mat-option
                 *ngFor="let documentType of documentTypes"
                 [value]="documentType.id"
@@ -11,7 +14,7 @@
             >
         </mat-select>
         <mat-error *ngIf="medicoForm.get('documentType').hasError('required')">
-            The document type is required
+            El tipo de documento es requerido
         </mat-error>
     </mat-form-field>
 
@@ -22,20 +25,26 @@
             id="document_number"
             matInput
             [formControlName]="'documentNumber'"
+            placeholder="Ingrese el numero de documento de identificacion (Ejemplo: 1202348349)"
         />
         <mat-error
             *ngIf="medicoForm.get('documentNumber').hasError('required')"
         >
-            The document number is required
+            El numero de documento es requerido
         </mat-error>
     </mat-form-field>
 
     <!-- Name field -->
     <mat-form-field class="w-full">
         <mat-label>{{ "labels.full_name" | transloco }}</mat-label>
-        <input id="full_name" matInput [formControlName]="'fullName'" />
+        <input
+            id="full_name"
+            matInput
+            [formControlName]="'fullName'"
+            placeholder="Ejemplo: Juan Andres Piguave Mendoza"
+        />
         <mat-error *ngIf="medicoForm.get('fullName').hasError('required')">
-            Full name is required
+            El nombre completo es requerido
         </mat-error>
     </mat-form-field>
 
@@ -46,13 +55,14 @@
             id="email"
             matInput
             [formControlName]="'email'"
+            placeholder="Ejemplo: juan.piguave@gmail.com"
             autocomplete="off"
         />
         <mat-error *ngIf="medicoForm.get('email').hasError('required')">
-            Email address is required
+            El correo electronico es requerido
         </mat-error>
         <mat-error *ngIf="medicoForm.get('email').hasError('email')">
-            Please enter a valid email address
+            Por favor ingrese un correo electronico valido
         </mat-error>
     </mat-form-field>
 
@@ -108,7 +118,12 @@
     <!-- Company field -->
     <mat-form-field class="w-full">
         <mat-label>{{ "labels.phone_number" | transloco }}</mat-label>
-        <input id="phone_number" matInput [formControlName]="'phoneNumber'" />
+        <input
+            id="phone_number"
+            matInput
+            [formControlName]="'phoneNumber'"
+            placeholder="Ejemplo: 0993452323"
+        />
     </mat-form-field>
 
     <!-- Submit button -->

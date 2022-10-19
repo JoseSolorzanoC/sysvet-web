@@ -24,6 +24,7 @@
                     id="reason"
                     matInput
                     [formControlName]="'reason'"
+                    placeholder="Ejemplo: Consulta de rutina"
                 ></textarea>
                 <mat-error
                     *ngIf="consultaForm.get('reason').hasError('required')"
@@ -39,6 +40,7 @@
                     id="anamnesis"
                     matInput
                     [formControlName]="'anamnesis'"
+                    placeholder="Ejemplo: Temperatura elevada acompanada de temblores corporales"
                 ></textarea>
                 <mat-error
                     *ngIf="consultaForm.get('anamnesis').hasError('required')"
@@ -54,6 +56,7 @@
                     matInput
                     type="number"
                     [formControlName]="'petCf'"
+                    placeholder="99"
                 />
                 <mat-error
                     *ngIf="consultaForm.get('petCf').hasError('required')"
@@ -71,6 +74,7 @@
                     id="petRf"
                     matInput
                     type="number"
+                    placeholder="99"
                     [formControlName]="'petRf'"
                 />
                 <mat-error
@@ -87,6 +91,7 @@
                     id="petPulse"
                     matInput
                     type="number"
+                    placeholder="99"
                     [formControlName]="'petPulse'"
                 />
                 <mat-error
@@ -103,6 +108,7 @@
                     id="petTemperature"
                     matInput
                     type="number"
+                    placeholder="99"
                     [formControlName]="'petTemperature'"
                 />
                 <mat-error
@@ -123,6 +129,7 @@
                     id="petConsultationWeight"
                     matInput
                     type="number"
+                    placeholder="99"
                     [formControlName]="'petConsultationWeight'"
                 />
                 <mat-error
@@ -139,7 +146,10 @@
             <!-- Attitude -->
             <mat-form-field class="col-start-1 col-span-2">
                 <mat-label>{{ "labels.pet_attitude" | transloco }}</mat-label>
-                <mat-select [formControlName]="'petAttitude'">
+                <mat-select
+                    [formControlName]="'petAttitude'"
+                    placeholder="Seleccione el estado de la actitud actual de la mascota"
+                >
                     <mat-option
                         *ngFor="let status of statusValues"
                         [value]="status"
@@ -153,7 +163,10 @@
                 <mat-label>{{
                     "labels.corporal_condition" | transloco
                 }}</mat-label>
-                <mat-select [formControlName]="'petCorporalCondition'">
+                <mat-select
+                    [formControlName]="'petCorporalCondition'"
+                    placeholder="Seleccione el estado de la condicion corporal actual de la mascota"
+                >
                     <mat-option
                         *ngFor="let status of statusValues"
                         [value]="status"
@@ -167,7 +180,10 @@
                 <mat-label>{{
                     "labels.hidratation_state" | transloco
                 }}</mat-label>
-                <mat-select [formControlName]="'petHidratationState'">
+                <mat-select
+                    [formControlName]="'petHidratationState'"
+                    placeholder="Seleccione el estado de la hidratacion actual de la mascota"
+                >
                     <mat-option
                         *ngFor="let status of statusValues"
                         [value]="status"

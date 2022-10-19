@@ -23,7 +23,11 @@
         <form [formGroup]="profileForm">
             <mat-form-field class="w-full">
                 <mat-label>Correo electronico</mat-label>
-                <input matInput formControlName="email" />
+                <input
+                    matInput
+                    formControlName="email"
+                    placeholder="Ejemplo: juan.piguave@gmail.com"
+                />
             </mat-form-field>
             <mat-form-field class="w-full">
                 <mat-label>Contrasena</mat-label>
@@ -32,7 +36,11 @@
             <ng-container formGroupName="person">
                 <mat-form-field class="w-full">
                     <mat-label>Nombres Completos</mat-label>
-                    <input matInput formControlName="fullName" />
+                    <input
+                        matInput
+                        formControlName="fullName"
+                        placeholder="Ejemplo: Juan Andres Piguave Mendoza"
+                    />
                 </mat-form-field>
                 <mat-form-field class="w-full">
                     <mat-label>Fecha de Nacimiento</mat-label>
@@ -40,6 +48,7 @@
                         matInput
                         [matDatepicker]="picker"
                         formControlName="birthDate"
+                        placeholder="dd/mm/aaaa"
                     />
                     <mat-hint>dd/mm/aaaa</mat-hint>
                     <mat-datepicker-toggle
@@ -50,7 +59,11 @@
                 </mat-form-field>
                 <mat-form-field class="w-full">
                     <mat-label>Telefono</mat-label>
-                    <input matInput formControlName="cellphone" />
+                    <input
+                        matInput
+                        formControlName="cellphone"
+                        placeholder="Ejemplo: 0993452323"
+                    />
                 </mat-form-field>
             </ng-container>
         </form>

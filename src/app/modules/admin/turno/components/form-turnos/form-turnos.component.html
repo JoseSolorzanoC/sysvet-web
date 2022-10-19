@@ -3,7 +3,12 @@
     <!-- Document Number field -->
     <mat-form-field class="w-full">
         <mat-label>{{ "labels.reason" | transloco }}</mat-label>
-        <input id="reason" matInput [formControlName]="'reason'" />
+        <input
+            id="reason"
+            matInput
+            [formControlName]="'reason'"
+            placeholder="Ejemplo: Temperatura elevada de mi mascota"
+        />
         <mat-error *ngIf="turnoForm.get('reason').hasError('required')">
             The reason is required
         </mat-error>
@@ -17,6 +22,7 @@
             [min]="minDate"
             [matDatepicker]="picker"
             id="date"
+            placeholder="dd/mm/aaaa"
             [formControlName]="'date'"
         />
         <mat-hint>dd/mm/aaaa</mat-hint>
@@ -29,7 +35,11 @@
 
     <mat-form-field class="w-full">
         <mat-label>Mascotas a atender</mat-label>
-        <mat-select [formControlName]="'pets'" multiple>
+        <mat-select
+            [formControlName]="'pets'"
+            multiple
+            placeholder="Selecciona una o mas mascotas"
+        >
             <mat-option *ngFor="let pet of pets" [value]="pet.id">{{
                 pet.name
             }}</mat-option>

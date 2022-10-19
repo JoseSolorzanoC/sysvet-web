@@ -3,7 +3,10 @@
     <!-- Document type field-->
     <mat-form-field class="w-full">
         <mat-label>{{ "labels.specie" | transloco }}</mat-label>
-        <mat-select formControlName="specieId">
+        <mat-select
+            formControlName="specieId"
+            placeholder="Seleccione la especie animal a la que pertenece la mascota"
+        >
             <mat-option
                 *ngFor="let petSpecie of petSpecies"
                 [value]="petSpecie.id"
@@ -14,7 +17,10 @@
 
     <mat-form-field class="w-full">
         <mat-label>{{ "labels.race" | transloco }}</mat-label>
-        <mat-select formControlName="raceId">
+        <mat-select
+            formControlName="raceId"
+            placeholder="Seleccione la raza de la mascota"
+        >
             <mat-option *ngFor="let petRace of petRaces" [value]="petRace.id">{{
                 petRace.name
             }}</mat-option>
@@ -24,31 +30,44 @@
     <!-- Document Number field -->
     <mat-form-field class="w-full">
         <mat-label>{{ "labels.name" | transloco }}</mat-label>
-        <input id="pet_name" matInput [formControlName]="'name'" />
+        <input
+            id="pet_name"
+            matInput
+            [formControlName]="'name'"
+            placeholder="Ejemplo: Firulais"
+        />
         <mat-error *ngIf="mascotaForm.get('name').hasError('required')">
-            The Pet name is required
+            El nombre de la mascota es requerido
         </mat-error>
     </mat-form-field>
 
-    <!-- Name field -->
     <mat-form-field class="w-full">
         <mat-label>{{ "labels.birth_date" | transloco }}</mat-label>
         <input
-            id="birth_date"
             matInput
+            [matDatepicker]="picker"
+            id="date"
+            placeholder="Fecha de nacimiento de la mascota (dd/mm/aaaa)"
             [formControlName]="'birthDate'"
-            type="date"
         />
+        <mat-hint>dd/mm/aaaa</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
         <mat-error *ngIf="mascotaForm.get('birthDate').hasError('required')">
-            The pet birth date is required
+            La fecha de nacimiento de la mascota es requerida
         </mat-error>
     </mat-form-field>
 
     <mat-form-field class="w-full">
         <mat-label>{{ "labels.fur_color" | transloco }}</mat-label>
-        <input id="fur_color" matInput [formControlName]="'furColor'" />
+        <input
+            id="fur_color"
+            matInput
+            [formControlName]="'furColor'"
+            placeholder="Ejemplo: Cafe claro con franjas blancas"
+        />
         <mat-error *ngIf="mascotaForm.get('furColor').hasError('required')">
-            The fur color is required
+            El color del pelaje de la mascota es requerido
         </mat-error>
     </mat-form-field>
 
@@ -58,11 +77,12 @@
             id="weight"
             matInput
             [formControlName]="'lastWeight'"
+            placeholder="Ultimo peso conocido de la mascota en kilogramos"
             type="number"
         />
         <mat-icon matSuffix>scale</mat-icon>
         <mat-error *ngIf="mascotaForm.get('lastWeight').hasError('required')">
-            The last weight is required
+            El ultimo peso conocido es requerido
         </mat-error>
     </mat-form-field>
 
